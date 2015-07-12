@@ -12,7 +12,11 @@ First of all the app checks if it has network connection.
 
 When clicking on an earthquake from the list the app will display a new screen with a map of the location of the earthquake and tweet texts from that location. The map **does not** work in offline mode, but the tweets displayed will be up to date with the last time the app had a network connection.
 
+**The application will not work by cloning this project. I've removed all authorization keys to both the Twitter API and the Google Maps API
+
+
 Personal reflections
 --------------------
 This is my first experience with JSON and using Twitter and Google Map within an app, and I have to say I've learned alot through this experience.
+
 
