@@ -17,8 +17,8 @@ When clicking on an earthquake from the list the app will display a new screen w
 Further development
 -------------------
 Some ideas for further development
-1. Allowing the user to choose the radius of the twitter search
-2. Displaying more info about tweets i.e. author, number of retweets
-3. Allowing the user to add filters to twitter searches i.e. language filters, most retweeted or most liked
+0. Allowing the user to choose the radius of the twitter search
+1. Displaying more info about tweets i.e. author, number of retweets
+2. Allowing the user to add filters to twitter searches i.e. language filters, most retweeted or most liked
 
 
