@@ -3,6 +3,7 @@ package com.rubenhag.quake.domain;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
@@ -95,7 +96,7 @@ public class TwitterTask extends AsyncTask <List<Feature>, Void, String> {
             locationString += ","+feature.getGeometry().toJSON().getJSONArray("coordinates").getDouble(1);
             StringBuilder stringBuilder = new StringBuilder(GEOCODE_URL);
             stringBuilder.append(locationString);
-            stringBuilder.append(",100000km");
+            stringBuilder.append(",1000km");
             stringBuilder.append("&count=20");
             HttpGet httpGet = new HttpGet(stringBuilder.toString());
             httpGet.setHeader("Authorization", "Bearer " + accessToken);

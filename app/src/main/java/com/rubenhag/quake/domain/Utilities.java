@@ -16,6 +16,22 @@ import java.util.List;
 
 public class Utilities {
 
+
+    /**
+     * Cuts all but 20 objects from a given List
+     * @param list
+     * @return New list of maximum 20 objects
+     */
+    public static List cutList(List list){
+        Iterator iterator = list.listIterator();
+        while(iterator.hasNext()){
+            if(list.indexOf(iterator.next())>19){
+                iterator.remove();
+            }
+        }
+        return list;
+    }
+
     /**
      * Sorts a List of Features based on Magnitude. Returns a List of 20 Features
      * @param features
@@ -27,12 +43,7 @@ public class Utilities {
             Log.d("Utilities", "list is null");
             return null;
         }
-        Iterator itr = features.listIterator();
-        while (itr.hasNext()){
-            if (features.indexOf(itr.next()) > 19){
-                itr.remove();
-            }
-        }
+        cutList(features);
         return features;
     }
 

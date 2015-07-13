@@ -46,8 +46,9 @@ public class EarthquakeUpdateTask extends AsyncTask<Void, Void, List> {
             if(url !=null){
                 try {
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                        InputStream in = new BufferedInputStream(connection.getInputStream());
-                        features = readStream(in);
+                    InputStream in = new BufferedInputStream(connection.getInputStream());
+                    features = readStream(in);
+                    in.close();
                 } catch (IOException e) {
                     Log.e("EarthquakeUpdateTask", "IOException", e);
                 }
@@ -64,7 +65,7 @@ public class EarthquakeUpdateTask extends AsyncTask<Void, Void, List> {
     private List<Feature> readStream(InputStream inputStream){
         try{
             GeoJSONObject geoJSON = GeoJSON.parse(inputStream);
-            jsonToFile(geoJSON.toString());
+            jsonToFile(geoJSON.toJSON().toString());
             if(geoJSON instanceof FeatureCollection){
                 FeatureCollection featureCollection = (FeatureCollection) geoJSON;
                 List<Feature> features = featureCollection.getFeatures();
@@ -89,10 +90,13 @@ public class EarthquakeUpdateTask extends AsyncTask<Void, Void, List> {
      */
     private void jsonToFile(String json){
         if(json!=null && json.length()>0) {
+            Log.d("toFile", json);
             try {
                 final File file = new File(context.getFilesDir(), "EarthquakeFeed");
                 FileWriter fileWriter = new FileWriter(file);
                 fileWriter.write(json);
+                fileWriter.flush();
+                fileWriter.close();
 
             } catch (IOException e) {
 

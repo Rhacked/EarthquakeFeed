@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -64,14 +65,10 @@ public class MainActivity extends Activity {
 
         } else {
 
-            mainList = getFeaturesFromFile();
+            mainList = Utilities.getTopTwenty(getFeaturesFromFile());
         }
 
         if(mainList !=null){
-            Iterator itr = mainList.iterator();
-            while(itr.hasNext()){
-                Object obj = itr.next();
-            }
             final ListView listView = (ListView) findViewById(R.id.quakeList);
             listView.setAdapter(new QuakeListAdapter(this, mainList));
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,6 +84,7 @@ public class MainActivity extends Activity {
                 }
             });
         }
+        deleteOld();
 
 
     }
@@ -142,14 +140,18 @@ public class MainActivity extends Activity {
             Log.d("MainActivity", "No file found");
             return null;
         }
+
         try {
             FileReader in = new FileReader(earthquakeFeed);
             BufferedReader bufferedReader = new BufferedReader(in);
-            GeoJSONObject geoJSON = GeoJSON.parse(bufferedReader.readLine());
-            if(geoJSON instanceof FeatureCollection) {
-                FeatureCollection featureCollection = (FeatureCollection) geoJSON;
-                List<Feature> features = featureCollection.getFeatures();
-                return features;
+            String line = bufferedReader.readLine();
+            if(line!=null) {
+                GeoJSONObject geoJSON = GeoJSON.parse(line);
+                if (geoJSON instanceof FeatureCollection) {
+                    FeatureCollection featureCollection = (FeatureCollection) geoJSON;
+                    List<Feature> features = featureCollection.getFeatures();
+                    return features;
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -159,6 +161,22 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private  void deleteOld(){
+        File[] files = new File(context.getFilesDir().toString()).listFiles();
+        ArrayList<File> filesForDelete = new ArrayList<>();
+        for(File file : files){
+            boolean found = false;
+            if(!file.getName().equals("EarthquakeFeed")){
+                for(Feature feature : mainList){
+                    if(file.getName().equals(feature.getIdentifier())) found = true;
+                }
+                if(!found){
+                    filesForDelete.add(file);
+                }
+            }
+        }
     }
 
 
