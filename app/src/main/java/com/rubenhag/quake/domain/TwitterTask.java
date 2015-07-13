@@ -45,8 +45,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TwitterTask extends AsyncTask <List<Feature>, Void, String> {
-    final static String CONSUMER_KEY = "AjaESabx0se0tPewDP7wM3VMH";
-    final static String CONSUMER_SECRET = "QF3uBO0jmUghwT40MSzFsOnWxFWyYSk349Yj7T6TM8eFGWLBkg";
+    final static String CONSUMER_KEY = "NOT MAKING PUBLIC";
+    final static String CONSUMER_SECRET = "NOT MAKING PUBLIC";
     final static String BEARER_TOKEN_URL = "https://api.twitter.com/oauth2/token";
     final static String GEOCODE_URL = "https://api.twitter.com/1.1/search/tweets.json?geocode=";
 
